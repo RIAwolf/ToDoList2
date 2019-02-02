@@ -11,12 +11,12 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.example.todolist.model.ItemService;
+import com.example.todolist.model.DBService;
 
 public class MainActivity extends AppCompatActivity {
 
     // Model
-    private ItemService itemService;
+    private DBService DBService;
 
     //Controller
     private ListAdapter listAdapter;
@@ -27,11 +27,11 @@ public class MainActivity extends AppCompatActivity {
     public void updateView() {
 
         if (listAdapter == null) {
-            listAdapter = new ListAdapter(this, itemService.getAllItems(), itemService);
+            listAdapter = new ListAdapter(this, DBService.getAllItems(), DBService);
             itemListView.setAdapter(listAdapter);
         } else {
             listAdapter.clear();
-            listAdapter.addAll(itemService.getAllItems());
+            listAdapter.addAll(DBService.getAllItems());
             listAdapter.notifyDataSetChanged();
         }
 
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String task = String.valueOf(taskEditText.getText());
-                        itemService.post(task);
+                        DBService.post(task);
                         updateView();
                     }
                 })
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        itemService = new ItemService(this);
+        DBService = new DBService(this);
 
         itemListView = (ListView) findViewById(R.id.listView);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -18,7 +18,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ItemService extends SQLiteOpenHelper {
+public class DBService extends SQLiteOpenHelper implements DataCrud{
 
     public static final String DB_NAME = "lt.demo.todo.db";
     public static final int DB_VERSION = 1;
@@ -31,7 +31,7 @@ public class ItemService extends SQLiteOpenHelper {
         public static final String COL_TASK_TITLE = "title";
     }
 
-    public ItemService(Context context) {
+    public DBService(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
@@ -55,6 +55,11 @@ public class ItemService extends SQLiteOpenHelper {
     public void get() {
         Call<List<ItemVO>> call = itemsRepository.getAll();
         call.enqueue(this);
+    }
+
+    @Override
+    public void post(ItemVO item) {
+
     }
 
     public void post(String task) {
